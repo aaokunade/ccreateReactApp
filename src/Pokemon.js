@@ -1,4 +1,11 @@
-import React from "react";
+import react from "react";
+import React, {useState} from "react";
+const PokemonArray = ["Elmo", "Ellie", "Cookie","Fred","Harry","George","Hagrid","Hermoine","Ron",]
+function GetRandomPokemon(){
+return PokemonArray[Math.floor(Math.random()*PokemonArray.length)]
+}
+
+
 const Logo = (props) => {
   // console.log (props);
   return (
@@ -6,7 +13,7 @@ const Logo = (props) => {
       <h1>Welcome to the {props.appName}</h1>
       <img
         src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/016.png"
-        alt="pokemon"
+        alt="pokemon" onClick = {props.handleClick}
       ></img>
     </header>
   );
@@ -18,8 +25,8 @@ const BestPokemon = (props) => {
     <div>
       <p>My favourite Pokemon is Squirtle</p>
       <ul>
-        {props.abilities.map((ability) => {
-          return <li>{ability}</li>;
+        {props.abilities.map((ability, i) => {
+          return <li key = {i}>{ability}</li>;
         })}
       </ul>
     </div>
@@ -27,7 +34,17 @@ const BestPokemon = (props) => {
 };
 
 const CaughtPokemon = (props) => {  
-  return <p>Caught 0 Pokemon on {props.date}</p>;
+  const [caught, setCaught] = useState([])
+  function catchPokemon() {
+    setCaught ((caught) => caught.concat(GetRandomPokemon()));
+  }
+  return <div>
+    <p>Caught {caught.length} Pokemon on {props.date}</p>
+  <button onClick = {catchPokemon}>Catch</button>
+  <ul>
+    {caught.map(element => <li>{element}</li>)}
+  </ul>
+  </div>
 };
 
 export { Logo, BestPokemon, CaughtPokemon };
