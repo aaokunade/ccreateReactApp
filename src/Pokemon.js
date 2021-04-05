@@ -34,12 +34,24 @@ const BestPokemon = (props) => {
 };
 
 const CaughtPokemon = (props) => {  
-  const [caught, setCaught] = useState([])
+  const [caught, setCaught] = useState([]);
+  const [pokemonNameInput, setPokemonNameInput] = useState("")
+  
+  
   function catchPokemon() {
-    setCaught ((caught) => caught.concat(GetRandomPokemon()));
+    setCaught ((caught) => caught.concat(pokemonNameInput))
+    setPokemonNameInput((caught) => "")
+  }
+
+  const handleInputChange = (event) => {
+    const InputValue = event.target.value
+    if(InputValue){
+    setPokemonNameInput(InputValue)
+    } else {}
   }
   return <div>
     <p>Caught {caught.length} Pokemon on {props.date}</p>
+    <input onChange = {handleInputChange} type="text" value = {pokemonNameInput} />
   <button onClick = {catchPokemon}>Catch</button>
   <ul>
     {caught.map(element => <li>{element}</li>)}
